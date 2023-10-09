@@ -23,5 +23,5 @@ export function keygen(text){
 }
 
 function randomInt(){
-    return Math.floor(Math.random() * (255 - 0)) + 255;
+    return Math.floor(Math.random() * (255)) + 255;
 }

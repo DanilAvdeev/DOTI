@@ -63,7 +63,7 @@ function keysGen(){
 }
 
 export function keyGen(){
-    const characters ='abcdefghijklmnopqrstuvwxyz1234567890';
+    const characters ='0123456789abcdef';
     let keyArray = [];
     let newKeys = [];
     for (let i = 0; i < 32; i++) {
@@ -79,7 +79,7 @@ export function keyGen(){
 }
 
 //eeeeh mdaaaa tyazheloo
-// const characters ='abcdef0123456789';
+// const characters ='0123456789abcdef';
 // let keyArray = [];
 // for (let i = 0; i < 32; i++){
 //     keyArray[i] = characters.charAt(Math.floor(Math.random() * characters.length));
@@ -126,24 +126,6 @@ function algorythm (block, keys){
     return block;
 }
 
-function blockImplode(left, right){
-    let block = '';
-    left = sprintf("%08x", left);
-    right = sprintf("%08x", right);
-    let arr = left.match(RegExp("((.{2})+?|(.{1,2})$)", "g"));
-
-    for(let k in arr) {
-        block += String.fromCharCode(parseInt(arr[k], 16));
-    }
-
-    arr = right.match(RegExp("((.{2})+?|(.{1,2})$)", "g"));
-    for(let k in arr) {
-        block += String.fromCharCode(parseInt(arr[k], 16));
-    }
-
-    return block;
-}
-
 function summMod32(left, keys) {
     return NormalizeInteger32(parseInt(left + keys));
 }
@@ -180,15 +162,13 @@ function blockCycleShift(block, bits){
 
 function NormalizeInteger32(num){
     let is_64bit;
-    num = parseInt(num);
-    is_64bit = parseInt(2147483647 + 1) > 0;
-
+    is_64bit = (2147483647 + 1) > 0;
     if(is_64bit) {
         let integer = 0;
         for(let i = 0; i < 32; i++) {
             integer = integer | (1 << i);
         }
-        num = parseInt(num & integer);
+        num = (num & integer);
     }
     return num;
 }
@@ -201,6 +181,24 @@ function bin2hex(s) {
         o += n.length < 2 ? '0' + n : n;
     }
     return o;
+}
+
+function blockImplode(left, right){
+    let block = '';
+    left = sprintf("%08x", left);
+    right = sprintf("%08x", right);
+    let arr = left.match(RegExp("((.{2})+?|(.{1,2})$)", "g"));
+
+    for(let k in arr) {
+        block += String.fromCharCode(parseInt(arr[k], 16));
+    }
+
+    arr = right.match(RegExp("((.{2})+?|(.{1,2})$)", "g"));
+    for(let k in arr) {
+        block += String.fromCharCode(parseInt(arr[k], 16));
+    }
+
+    return block;
 }
 
 function sprintf() {
@@ -226,7 +224,7 @@ function sprintf() {
     //   example 5: sprintf('%-03s', 'E');
     //   returns 5: 'E00'
 
-    let regex = /%%|%(\d+\$)?([-+\'#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuideEfFgG])/g;
+    let regex = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuideEfFgG])/g;
     let a = arguments;
     let i = 0;
     let format = a[i++];
