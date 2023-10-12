@@ -15,7 +15,7 @@ const Hash = () => {
         <Card>
             <Card.Body>
                 <Card.Title style={{textAlign: "center"}}>
-                    Хеш-функция SHA-256
+                    Хеш-функция SHA-1
                 </Card.Title>
                 <InputGroup className={"mb-3 mt-3"}>
                     <Form.Control
